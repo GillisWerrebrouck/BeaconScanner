@@ -64,7 +64,7 @@ err = bluez.hci_le_set_scan_enable(
     sock.fileno(),
     1,  # 1 - turn on;  0 - turn off
     0, # 0-filtering disabled, 1-filter out duplicates
-    1000  # timeout
+    500  # timeout
 )
 if err < 0:
     # turn off led
@@ -116,7 +116,7 @@ def beacontimer():
     print("----------")
 
     # run the function each second
-    threading.Timer(1, beacontimer).start()
+    threading.Timer(2, beacontimer).start()
 
 # start the timer
 beacontimer()
