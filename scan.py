@@ -81,6 +81,14 @@ with open("/home/pi/Documents/BeaconScanner/beacons") as f:
 
 devices = []
 
+# get the received data from the bluetooth socket
+# filter the mac address and add to devices
+while True:
+    data = sock.recv(1024)
+    # get bluetooth address from LE Advert packet
+    ba = ':'.join("{0:02x}".format(x) for x in data[12:6:-1])
+    devices.append(ba)
+
 # define a method to check if a beacon is in range
 def beacontimer():
     global devices
@@ -120,11 +128,3 @@ def beacontimer():
 
 # start the timer
 beacontimer()
-
-# get the received data from the bluetooth socket
-# filter the mac address and add to devices
-while True:
-    data = sock.recv(1024)
-    # get bluetooth address from LE Advert packet
-    ba = ':'.join("{0:02x}".format(x) for x in data[12:6:-1])
-    devices.append(ba)
